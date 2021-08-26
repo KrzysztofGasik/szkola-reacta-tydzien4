@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 
 import Expense from './Expense';
 import Revenue from './Revenue';
+import Sum from './Sum';
 
 const styles = {
 	display: 'flex',
@@ -27,16 +28,32 @@ const styles = {
 	}
 };
 
+const initialValues = {
+	exprev: '',
+	name: '',
+	amount: 0,
+	category: ''
+};
+
 export default function Form() {
-	const [ values, setValues ] = useState({
-		exprev: '',
-		name: '',
-		amount: 0,
-		category: ''
-	});
+	const [ values, setValues ] = useState(initialValues);
+
+	const clearValues = () => {
+		setValues(initialValues);
+	};
+
+	const sumUp = () => {
+		let expenses = JSON.parse(localStorage.getItem('expenses'));
+		let revenues = JSON.parse(localStorage.getItem('revenues'));
+		let expensesSum = expenses.reduce((prev, curr) => prev + Number(curr.amount), 0);
+		let revenuesSum = revenues.reduce((prev, curr) => prev + Number(curr.amount), 0);
+		let sum = revenuesSum - expensesSum;
+		return sum;
+	};
 
 	const [ exp, setExpense ] = useState([]);
 	const [ rev, setRevenue ] = useState([]);
+	const [ sum, setSum ] = useState(sumUp());
 	const validation = (obj) => {
 		const validate = Object.keys(obj).every((k) => obj[k]);
 		return validate;
@@ -71,8 +88,12 @@ export default function Form() {
 	const addHandler = (e) => {
 		e.preventDefault();
 		const valid = validation(values);
-		if (valid) addToStorage(values);
-		if (valid) e.target.reset();
+		if (valid) {
+			addToStorage(values);
+			clearValues();
+			setSum(sumUp());
+			e.target.reset();
+		}
 	};
 
 	return (
@@ -106,8 +127,9 @@ export default function Form() {
 					Add
 				</button>
 			</form>
-			<Revenue data={rev} handler={setExpense} />
-			<Expense data={exp} handler={setRevenue} />
+			<Revenue data={rev} handler={setExpense} handlerSum={setSum} calculateSum={sumUp} />
+			<Expense data={exp} handler={setRevenue} handlerSum={setSum} calculateSum={sumUp} />
+			<Sum sum={sum} />
 		</Fragment>
 	);
 }

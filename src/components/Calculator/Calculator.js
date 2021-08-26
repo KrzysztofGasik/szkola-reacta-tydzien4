@@ -3,7 +3,9 @@ import React from 'react';
 import Form from './Form';
 
 const styles = {
-	display: 'flex'
+	display: 'flex',
+	flexWrap: 'wrap',
+	justifyContent: 'center'
 };
 
 export default function Calculator() {

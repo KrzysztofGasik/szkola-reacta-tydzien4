@@ -24,7 +24,7 @@ const styles = {
 	}
 };
 
-export default function Expense({ data, handler }) {
+export default function Expense({ handler, handlerSum, calculateSum }) {
 	const expenses = JSON.parse(localStorage.getItem('expenses'));
 	const dataFromLocalStorage = expenses === null || expenses.length === 0;
 
@@ -32,6 +32,7 @@ export default function Expense({ data, handler }) {
 		const { id } = element;
 		const update = expenses.filter((el) => el.id !== id);
 		handler(() => [ ...update ]);
+		handlerSum(calculateSum);
 		localStorage.setItem('expenses', JSON.stringify(update));
 	};
 	return (

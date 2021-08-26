@@ -76,7 +76,7 @@ export default function Form() {
 	};
 
 	return (
-		<Fragment>
+		<div>
 			<p>Zadanie 2 - Form without react-hook-form</p>
 			{toggle ? (
 				<Thanks onReset={resetHandler} />
@@ -147,6 +147,6 @@ export default function Form() {
 					</button>
 				</form>
 			)}
-		</Fragment>
+		</div>
 	);
 }

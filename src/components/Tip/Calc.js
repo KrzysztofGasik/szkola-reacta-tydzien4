@@ -48,7 +48,7 @@ const styles = {
 export default function Calc() {
 	return (
 		<div style={styles}>
-			<p>Calculate tip with functional component and class component</p>
+			<p>Zadanie 1 - Calculate tip with functional component and class component</p>
 			<Tip styles={styles} />
 			<TipClass styles={styles} />
 		</div>
