@@ -45,8 +45,8 @@ export default function Form() {
 	const sumUp = () => {
 		let expenses = JSON.parse(localStorage.getItem('expenses'));
 		let revenues = JSON.parse(localStorage.getItem('revenues'));
-		let expensesSum = expenses.reduce((prev, curr) => prev + Number(curr.amount), 0);
-		let revenuesSum = revenues.reduce((prev, curr) => prev + Number(curr.amount), 0);
+		let expensesSum = expenses !== null ? expenses.reduce((prev, curr) => prev + Number(curr.amount), 0) : 0;
+		let revenuesSum = revenues !== null ? revenues.reduce((prev, curr) => prev + Number(curr.amount), 0) : 0;
 		let sum = revenuesSum - expensesSum;
 		return sum;
 	};
